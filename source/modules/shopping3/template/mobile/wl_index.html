@@ -48,7 +48,7 @@
         function getAllList(){
             var params = {
             }
-            MLoading.show('加载中');
+            MLoading.show('加载中，别着急哦');
              _doAjax("{php echo  $this->createMobileUrl('wldishlist')}", "POST", params, function(res) {
                 MLoading.hide();
                 window.res = res;
