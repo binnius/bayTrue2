@@ -1,0 +1,103 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('spec', array('op' => 'post'));}">添加规格</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('spec', array('op' => 'display'));}">管理</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>添加规格</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">名称</label></th>
+				<td>
+					<input type="text" name="title" class="span5" value="{$item['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">描述</label></th>
+				<td>
+					<input type="text" name="description" class="span5" value="{$item['description']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">显示方式</label></th>
+				<td>
+					<label for="radio_1" class="radio inline"><input type="radio" name="displaytype" id="radio_1" value="1" {if empty($item) || $item['displaytype'] == 1} checked{/if} /> 平铺</label>
+					<label for="radio_2" class="radio inline"><input type="radio" name="displaytype" id="radio_2" value="2" {if $item['displaytype'] == 2} checked{/if} /> 下拉</label>
+				</td>
+			</tr>
+		</table>
+		<h4>规格值</h4>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:100px;" class="row-hover">名称<i></i></th>
+					<th style="text-align:right;">操作</th>
+				</tr>
+			</thead>
+			<tbody id="spec-items">
+			{loop $item['content'] $field}
+				<tr>
+					<td><input  name="spec[]" type="text" value="{$field}"></td>
+					<td style="text-align:right;"><a onclick="if (confirm('删除操作不可恢复，确认吗？')){$(this).parent().parent().remove();};return false;" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
+				</tr>
+			{/loop}
+			</tbody>
+			<tr>
+				<td colspan="6">
+					<a href="javascript:;" onclick="addItem()"><i class="icon-plus-sign-alt"></i> 添加规格值</a>
+				</td>
+			</tr>
+		</table>
+		<table class="tb">
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	function addItem() {
+		var html = '' +
+				'<tr>' +
+					'<td><input name="spec[]" type="text" class="span3" /></td>' +
+					'<td style="text-align:right;"><a href="javascript:;" onclick="$(this).parent().parent().remove();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a></td>' +
+				'</tr>';
+		$('#spec-items').append(html);
+	}
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+<div class="stat">
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+				<th style="width:200px;" class="row-hover">名称<i></i></th>
+				<th style="width:300px;">描述<i></i></th>
+				<th style="text-align:right;">操作</th>
+			</tr>
+		</thead>
+		{loop $list $item}
+			<tr>
+				<td style="width:100px;">{$item['title']}</td>
+				<td style="width:350px;">{$item['description']}</td>
+				<td style="text-align:right;">
+					<a href="{php echo $this->createWebUrl('spec', array('op' => 'post', 'id' => $item['id']))}" data-toggle="tooltip" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+					<a href="{php echo $this->createWebUrl('spec', array('op' => 'delete', 'id' => $item['id'], 'type' => 'item'))}" data-toggle="tooltip" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+				</td>
+			</tr>
+		{/loop}
+	</table>
+	{$pager}
+</div>
+</div>
+{/if}
+{template 'common/footer'}

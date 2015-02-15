@@ -1,0 +1,222 @@
+<?php defined('IN_IA') or exit('Access Denied');?><?php  include $this->template('common/header', TEMPLATE_INCLUDEPATH);?>
+<link rel="stylesheet" type="text/css" href="./source/modules/shopping3/style/css/uploadify_t.css?2014-01-28-1" media="all" />
+<ul class="nav nav-tabs">
+	<li class="active"><a href="<?php  echo $this->createWebUrl('shopset')?>">基本设置</a></li>
+	<li><a href="<?php  echo $this->createWebUrl('mailset')?>">邮件设置</a></li>	
+ 	<li><a href="<?php  echo $this->createWebUrl('printset')?>">打印机设置</a></li>	
+	<li><a href="<?php  echo $this->createWebUrl('smsset')?>">短信设置</a></li>	
+	<li><a href="<?php  echo $this->createWebUrl('orderset')?>">订单限制</a></li>	
+	<li><a href="<?php  echo $this->createWebUrl('ordertype')?>">店铺类型</a></li>	
+</ul>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="parentid" value="<?php  echo $set['id'];?>" />
+		<h4>店铺基本设置</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">店铺名称</label></th>
+				<td>
+					<input type="text" name="shop_name" class="span6" value="<?php  echo $set['shop_name'];?>" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">幻灯图片</label></th>
+				<td>
+					<div id="upimg_main">
+						<div id="file_upload" class="uploadify">
+						<span class="btn btn-file"><span class="fileupload-new" id="file_upload-button">选择图片</span></span><span class="maroon">*</span></div>						
+						<ul class="ipost-list ui-sortable" id="fileList">
+							<?php  if(is_array($set['thumbArr'])) { foreach($set['thumbArr'] as $row) { ?>
+							<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a>  
+							<input type="hidden" value="<?php  echo $row;?>" name="thumb_url[]">
+							<span class="item_box"><img src="<?php  echo $row;?>"></span>
+							</li>
+							<?php  } } ?>
+ 						</ul>
+						<div id="file_upload_queue" class="uploadifyQueue"></div>
+					</div>
+					<span class="help-block">只支持一张图片，暂不支持幻灯。预留给一些用户做幻灯效果的。</span></td>
+				</td>
+			</tr>
+			<tr>
+				<th>店铺公告</th>
+				<td><textarea name="shop_notice" rows="5" cols="50" class="span7"><?php  echo $set['shop_notice'];?></textarea></td>
+			</tr>
+			<tr>
+				<th><label for="">电话</label></th>
+				<td><input type="text" id="" name="shop_tel" value="<?php  echo $set['shop_tel'];?>"  class="span5" /></td>
+			</tr>
+			<tr>
+				<th><label for="">商家地址</label></th>
+				<td><input type="text" id="" name="shop_address" value="<?php  echo $set['shop_address'];?>"  class="span5" /></td>
+			</tr>
+			<tr>
+				<th>送货区域</th>
+				<td><textarea name="address_list" rows="5" cols="50" class="span7"><?php  echo $set['address_list'];?></textarea>
+					<span class="help-block">外卖地址库，一行一个，每行不超过20个字</span></td>
+				</td>
+			</tr>
+			<tr>
+				<th>包房</th>
+				<td><textarea name="room_list" rows="5" cols="50" class="span7"><?php  echo $set['room_list'];?></textarea>
+					<span class="help-block">包间名称，一行一个，每行不超过20个字</span></td>
+				</td>
+			</tr>
+			<tr>
+				<th>大厅</th>
+				<td><textarea name="desk_list" rows="5" cols="50" class="span7"><?php  echo $set['desk_list'];?></textarea>
+					<span class="help-block">桌号名称，一行一个，每行不超过20个字</span></td>
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">定位地址搜索</label></th>
+				<td><div class="input-append"><input type="text" id="address" name="address" value=""  class="span5" /><button type="button" class="btn" name="submit" value="搜索" onclick="bmap.searchMapByAddress($('#address').val())">搜索</button></div>
+				<span class="help-block">可以通过查询地址，快速定位地图位置。</span></td>
+			</tr>			
+			<tr>
+				<th><label for="">坐标：</label></th>
+				<td><input type="text" name="lng" id="lng" value="<?php  echo $set['lng'];?>"  class="span3" /> - <input type="text" id="lat" name="lat" value="<?php  echo $set['lat'];?>"  class="span3" /></td>
+			</tr>			
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="id" value="<?php  echo $set['id'];?>" />
+					<input type="hidden" name="token" value="<?php  echo $_W['token'];?>" />
+				</td>
+			</tr>
+
+			<tr>
+				<th></th>
+				<td><div id="baidumap" style="width:600px; height:370px;"></div></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+ <script type="text/javascript">
+var editor = KindEditor.editor({
+	allowFileManager : true,
+	uploadJson : "./index.php?act=attachment&do=upload",
+	fileManagerJson : "./index.php?act=attachment&do=manager",
+	 
+	});
+	$("#file_upload-button").click(function() {
+		editor.loadPlugin("image", function() {
+		editor.plugin.imageDialog({
+			imageUrl : $("#upload-image-url-thumb").val(),
+			clickFn : function(url) {
+				editor.hideDialog();
+				var filename = /images(.*)/.exec(url);
+					html='<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a><input type="hidden" value="'+url+'" name="thumb_url[]"><span class="item_box"><img src="'+url+'"></span></li>';
+					$("#fileList").append(html);
+			}
+		});
+	});
+});
+$("a.thumb_close").live("click ", function (n) {
+   $(this).parent().remove();
+});
+</script>	
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>  
+<script type="text/javascript">
+var bmap = {
+	'option' : {
+		'lock' : false,
+		'container' : 'baidumap',
+		'infoWindow' : {'width' : 250, 'height' : 100, 'title' : ''},
+		'point' : {'lng' : '<?php  echo $set['lng'];?>', 'lat' : '<?php  echo $set['lat'];?>'}
+	},
+	'init' : function(option) {
+		var $this = this;
+		$this.option = $.extend({},$this.option,option);
+		$this.option.defaultPoint = new BMap.Point($this.option.point.lng, $this.option.point.lat);
+		$this.bgeo = new BMap.Geocoder();
+		$this.bmap = new BMap.Map($this.option.container);
+		$this.bmap.centerAndZoom($this.option.defaultPoint, 15);
+		$this.bmap.enableScrollWheelZoom();
+		$this.bmap.enableDragging();
+		$this.bmap.enableContinuousZoom();
+		$this.bmap.addControl(new BMap.NavigationControl());
+		$this.bmap.addControl(new BMap.OverviewMapControl());
+		//添加标注
+		$this.marker = new BMap.Marker($this.option.defaultPoint);
+		$this.marker.setLabel(new BMap.Label('请您移动此标记，选择您的坐标！', {'offset':new BMap.Size(10,-20)}));
+		$this.marker.enableDragging();
+		$this.bmap.addOverlay($this.marker);
+		//$this.marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+		$this.showPointValue($this.marker.getPosition());
+		//拖动地图事件
+		$this.bmap.addEventListener("dragging", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//缩入地图事件
+		$this.bmap.addEventListener("zoomend", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//拖动标记事件
+		$this.marker.addEventListener("dragend", function (e) {
+			$this.showPointValue();
+			$this.showAddress();
+			$this.bmap.panTo(new BMap.Point(e.point.lng, e.point.lat));
+			$this.option.lock = false;
+			$this.marker.setAnimation(null);
+		});
+	},
+	'searchMapByAddress' : function(address) {
+		var $this = this;
+		 $this.bgeo.getPoint(address, function (point) {
+			if (point) {
+				$this.showPointValue();
+				$this.showAddress();
+				$this.bmap.panTo(point);
+				$this.setMarkerCenter();
+			}
+		});
+	},
+	'searchMapByPCD' : function(address) {
+		var $this = this;
+		$this.option.lock = true;
+		$this.searchMapByAddress($('#sel-provance').val()+$('#sel-city').val()+$('#sel-area').val());
+	},
+	'setMarkerCenter' : function() {
+		var $this = this;
+		var center = $this.bmap.getCenter();
+		$this.marker.setPosition(new BMap.Point(center.lng, center.lat));
+		$this.showPointValue();
+		$this.showAddress();
+	},
+	'showPointValue' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$('#lng').val(point.lng);
+		$('#lat').val(point.lat);
+	},
+	'showAddress' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$this.bgeo.getLocation(point, function (s) {
+			if (s) {
+				$('#address').val(s.address);
+				if (!$this.option.lock) {
+					cascdeInit(s.addressComponents.province,s.addressComponents.city,s.addressComponents.district);
+				}
+			}
+		});
+	}
+};
+$(function(){
+	var option = {};
+	<?php  if(!empty($set['lng']) && !empty($set['lat'])) { ?>
+	option = {'point' : {'lng' : '<?php  echo $set['lng'];?>', 'lat' : '<?php  echo $set['lat'];?>'}}
+	<?php  } ?>
+	bmap.init(option);
+});
+</script>
+
+<?php  include $this->template('common/footer', TEMPLATE_INCLUDEPATH);?>

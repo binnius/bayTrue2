@@ -1,0 +1,2 @@
+1.\resource\script\kindeditor\plugins
+	把smimage中的other复制过去
