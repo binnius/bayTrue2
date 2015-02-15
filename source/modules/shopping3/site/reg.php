@@ -4,7 +4,8 @@
  *
  * @author 超级无聊
  * @url
- */WeSession::$expire = 600;	
+ */
+WeSession::$expire = 600;	
 WeSession::start();
 	if($_GPC['action']=='code'){
 		if($_GPC['mobile']==$_SESSION['phone']){
@@ -55,4 +56,5 @@ WeSession::start();
 			message("验证码错误，请重新输入");
 		}
 	}
-	include $this->template('wl_reg');
+	//include $this->template('wl_reg');
+	include $this->template('wl_index');
