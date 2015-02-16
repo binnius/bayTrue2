@@ -24,7 +24,8 @@
 			<entry title="订单查询入口设置" do="wlmember" />			
 		</cover>
 		<menu>
-			<entry title="基本设置" do="shopset" />			<entry title="订单管理" do="order" />
+			<entry title="基本设置" do="shopset" />
+			<entry title="订单管理" do="order" />
 			<entry title="商品分类" do="category" />
 			<entry title="商品管理" do="goods" />
 			<entry title="智能选餐" do="genius" />
@@ -215,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_set` (
   `sms_from` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1是打印机自己发，2是短信平台',
   `sms_secret` varchar(80) NOT NULL,
   `sms_text` varchar(200) NOT NULL,
-  `sms_resgister` tinyint(1) NOT NULL DEFAULT '1',
+  `sms_resgister` tinyint(0) NOT NULL DEFAULT '1',
   `order_limit` tinyint(4) NOT NULL,
   `sms_user` varchar(50) NOT NULL DEFAULT '',
   `address_list` varchar(500) NOT NULL DEFAULT '',
