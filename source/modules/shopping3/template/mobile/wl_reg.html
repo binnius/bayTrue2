@@ -71,7 +71,8 @@
 		radioClass: 'iradio_minimal-red'
 	}).parent().css("float","left");
 	
-    var mobile_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
+    //var mobile_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
+      var mobile_reg = /^(10[0-9])\d{8}$/;
 
 	function checkSubmit(){
 		var mobile = $.trim($("#mobile").val());
