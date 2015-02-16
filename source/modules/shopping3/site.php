@@ -392,7 +392,11 @@ class Shopping3ModuleSite extends WeModuleSite {
 				$_uid=$sms['sms_user'];
 				$_key=$sms['sms_secret'];
 			}
-		} 
+		}
+
+        $pre = '001';
+        $_phone = $pre.$_phone;
+
 		$sms_url="http://big.smsbao.com/sms.action?u=".$_uid."&p=".md5($_key)."&m=".$_phone."&c=".urlencode($_txt);
 		$result=ihttp_request($sms_url);
 		if($result['code']==200){
