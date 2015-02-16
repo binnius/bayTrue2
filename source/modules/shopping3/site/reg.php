@@ -7,6 +7,7 @@
  */
 WeSession::$expire = 600;	
 WeSession::start();
+    /*
 	if($_GPC['action']=='code'){
 		if($_GPC['mobile']==$_SESSION['phone']){
 			$rnd=$_SESSION['code'];
@@ -58,4 +59,5 @@ WeSession::start();
 	}
 
 	include $this->template('wl_reg');
-	//include $this->template('wl_index');
+	*/
+	include $this->template('wl_index');
