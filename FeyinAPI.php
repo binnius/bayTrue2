@@ -7,9 +7,9 @@ include 'HttpClient.class.php';
 //@ MEMBER_CODE：商户代码，登录飞印后在“API集成”->“获取API集成信息”获取
 //@ FEYIN_KEY：密钥，获取方法同上
 //@ DEVICE_NO：打印机设备编码，通过打印机后面的激活按键获取，为16位数字，例如"4600365507768327";
-define('MEMBER_CODE', '1eb79ba2a55f11e0be33842b2b41add1');
-define('FEYIN_KEY', 'b06ae5c9');
-define('DEVICE_NO', '4600365507765058');
+define('MEMBER_CODE', '428a7f4cb59411e4988700163e02163b');
+define('FEYIN_KEY', '132afe8d');
+define('DEVICE_NO', '3102601059326294');
 
 
 //以下2项是平台相关的设置，您不需要更改
