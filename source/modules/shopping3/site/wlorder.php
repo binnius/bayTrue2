@@ -4,7 +4,8 @@
  *
  * @author 超级无聊
  * @url
- */if($_GPC['d']=='checkout'){
+ */
+if($_GPC['d']=='checkout'){
 	 
 	$params=$_POST['params'];
 	$paramsArr=json_decode($params,true);
@@ -142,7 +143,9 @@
 		$params['ordersn'] = $order['ordersn'];
 		$params['virtual'] = $order['goodstype'] == 2 ? true : false;		
 		$bootstrap_type = 3;
+
 		include $this->template('header');
 		$this->pay($params);
 		include $this->template('footerbar');
+		$this->printOrder()
 }
