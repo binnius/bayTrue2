@@ -6,6 +6,18 @@
  * @url
  */
 
+
+include 'HttpClient.class.php';
+
+define('MEMBER_CODE', '428a7f4cb59411e4988700163e02163b');
+define('FEYIN_KEY', '132afe8d');
+define('DEVICE_NO', '');
+
+//以下2项是平台相关的设置，您不需要更改
+define('FEYIN_HOST','my.feyin.net');
+define('FEYIN_PORT', 80);
+
+
 defined('IN_IA') or exit('Access Denied');
 
 define('RES','./source/modules/shopping3/style/');
@@ -593,6 +605,95 @@ class Shopping3ModuleSite extends WeModuleSite {
 		//$address=pdo_fetch("SELECT * FROM ".tablename('shopping3_address')." WHERE   id={$order['aid']}");
 		include $this->template('wl_show');
 	}
+
+//----------------------以下是接口定义实现，第三方应用可根据具体情况直接修改----------------------------
+
+function sendFreeMessage($msg) {
+	$msg['reqTime'] = number_format(1000*time(), 0, '', '');
+	$content = $msg['memberCode'].$msg['msgDetail'].$msg['deviceNo'].$msg['msgNo'].$msg['reqTime'].FEYIN_KEY;
+	$msg['securityCode'] = md5($content);
+	$msg['mode']=2;
+
+	return sendMessage($msg);
+}
+
+function sendFormatedMessage($msgInfo) {
+	$msgInfo['reqTime'] = number_format(1000*time(), 0, '', '');
+	$content = $msgInfo['memberCode'].$msgInfo['customerName'].$msgInfo['customerPhone'].$msgInfo['customerAddress'].$msgInfo['customerMemo'].$msgInfo['msgDetail'].$msgInfo['deviceNo'].$msgInfo['msgNo'].$msgInfo['reqTime'].FEYIN_KEY;
+
+	$msgInfo['securityCode'] = md5($content);
+	$msgInfo['mode']=1;
+
+	return sendMessage($msgInfo);
+}
+
+
+function sendMessage($msgInfo) {
+	$client = new HttpClient(FEYIN_HOST,FEYIN_PORT);
+	if(!$client->post('/api/sendMsg',$msgInfo)){ //提交失败
+		return 'faild';
+	}
+	else{
+		return $client->getContent();
+	}
+}
+
+function queryState($msgNo){
+	$now = number_format(1000*time(), 0, '', '');
+	$client = new HttpClient(FEYIN_HOST,FEYIN_PORT);
+	if(!$client->get('/api/queryState?memberCode='.MEMBER_CODE.'&reqTime='.$now.'&securityCode='.md5(MEMBER_CODE.$now.FEYIN_KEY.$msgNo).'&msgNo='.$msgNo)){ //请求失败
+		return 'faild';
+	}
+	else{
+		return $client->getContent();
+	}
+}
+
+function listDevice(){
+	$now = number_format(1000*time(), 0, '', '');
+	$client = new HttpClient(FEYIN_HOST,FEYIN_PORT);
+	if(!$client->get('/api/listDevice?memberCode='.MEMBER_CODE.'&reqTime='.$now.'&securityCode='.md5(MEMBER_CODE.$now.FEYIN_KEY))){ //请求失败
+		return 'faild';
+	}
+	else{
+		/***************************************************
+		解释返回的设备状态
+		格式：
+		<device id="4600006007272080">
+		<address>广东**</address>
+		<since>2010-09-29</since>
+		<simCode>135600*****</simCode>
+		<lastConnected>2011-03-09  19:39:03</lastConnected>
+		<deviceStatus>离线 </deviceStatus>
+		<paperStatus></paperStatus>
+		</device>
+		**************************************************/
+
+		$xml = $client->getContent();
+		$sxe = new SimpleXMLElement($xml);
+		foreach($sxe->device as $device) {
+			$id = $device['id'];
+			echo "设备编码：$id    ";
+
+			$deviceStatus = $device->deviceStatus;
+			echo "状态：$deviceStatus";
+			echo '<br>';
+		}
+	}
+}
+
+
+function listException(){
+	$now = number_format(1000*time(), 0, '', '');
+	$client = new HttpClient(FEYIN_HOST,FEYIN_PORT);
+	if(!$client->get('/api/listException?memberCode='.MEMBER_CODE.'&reqTime='.$now.'&securityCode='.md5(MEMBER_CODE.$now.FEYIN_KEY))){ //请求失败
+		return 'faild';
+	}
+	else{
+		return $client->getContent();
+	}
+}
+
 
 }
 
