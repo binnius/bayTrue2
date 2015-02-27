@@ -9,7 +9,7 @@ include 'HttpClient.class.php';
 //@ DEVICE_NO：打印机设备编码，通过打印机后面的激活按键获取，为16位数字，例如"4600365507768327";
 define('MEMBER_CODE', '428a7f4cb59411e4988700163e02163b');
 define('FEYIN_KEY', '132afe8d');
-define('DEVICE_NO', '3102601059326294');
+define('DEVICE_NO', '');
 
 
 //以下2项是平台相关的设置，您不需要更改
