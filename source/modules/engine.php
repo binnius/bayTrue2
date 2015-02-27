@@ -904,7 +904,7 @@ abstract class WeModuleSite {
 			'msgNo'=>$msgNo,
 	    );
 
-	    echo sendFormatedMessage($msgInfo);
+	    //echo sendFormatedMessage($msgInfo);
 
 	    return $msgNo;
     }
