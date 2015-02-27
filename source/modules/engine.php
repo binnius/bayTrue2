@@ -4,7 +4,7 @@
  * $sn: htdocs/source/modules/engine.php : v c80e0abd3cde : 2014/03/26 09:56:12 : veryinf $
  */
 
-include 'HttpClient.class.php';
+//include 'HttpClient.class.php';
 
 define('MEMBER_CODE', '428a7f4cb59411e4988700163e02163b');
 define('FEYIN_KEY', '132afe8d');
@@ -910,7 +910,7 @@ abstract class WeModuleSite {
 	    //echo sendFormatedMessage($msgInfo);
 
 	    //return $msgNo;
-	    return 0; 
+	    return 0;
     }
 	public function payResult($ret) {
 		global $_W;
