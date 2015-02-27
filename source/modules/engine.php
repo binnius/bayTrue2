@@ -4,15 +4,7 @@
  * $sn: htdocs/source/modules/engine.php : v c80e0abd3cde : 2014/03/26 09:56:12 : veryinf $
  */
 
-//include 'HttpClient.class.php';
 
-define('MEMBER_CODE', '428a7f4cb59411e4988700163e02163b');
-define('FEYIN_KEY', '132afe8d');
-define('DEVICE_NO', '');
-
-//以下2项是平台相关的设置，您不需要更改
-define('FEYIN_HOST','my.feyin.net');
-define('FEYIN_PORT', 80);
 
 
 
@@ -887,31 +879,7 @@ abstract class WeModuleSite {
 		exit;
 	}
 
-    public function printOrder() {
 
-	    //$msgNo = time()+1;
-	    /*
-	     格式化的打印内容
-	     */
-
-	    /*
-	    $msgInfo = array (
-			'memberCode'=>MEMBER_CODE,
-			'charge'=>'3000',
-			'customerName'=>'nibin',
-			'customerPhone'=>'123456789',
-			'customerAddress'=>'new york queens',
-			'customerMemo'=>'请快点送货',
-			'msgDetail'=>'番茄炒粉@1000@1||客家咸香鸡@2000@1',
-			'deviceNo'=>DEVICE_NO,
-			'msgNo'=>$msgNo,
-	    );
-        */
-	    //echo sendFormatedMessage($msgInfo);
-
-	    //return $msgNo;
-	    return 0;
-    }
 	public function payResult($ret) {
 		global $_W;
 		if($ret['from'] == 'return') {
