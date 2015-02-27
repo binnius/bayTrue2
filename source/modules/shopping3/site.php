@@ -294,7 +294,7 @@ class Shopping3ModuleSite extends WeModuleSite {
 
     public function printOrder() {
 
-	    $msgNo = time()+1;
+	    //$msgNo = time()+1;
 	    /*
 	     格式化的打印内容
 	     */
