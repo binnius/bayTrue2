@@ -893,6 +893,8 @@ abstract class WeModuleSite {
 	    /*
 	     格式化的打印内容
 	     */
+
+	    /*
 	    $msgInfo = array (
 			'memberCode'=>MEMBER_CODE,
 			'charge'=>'3000',
@@ -904,10 +906,11 @@ abstract class WeModuleSite {
 			'deviceNo'=>DEVICE_NO,
 			'msgNo'=>$msgNo,
 	    );
-
+        */
 	    //echo sendFormatedMessage($msgInfo);
 
-	    return $msgNo;
+	    //return $msgNo;
+	    return 0; 
     }
 	public function payResult($ret) {
 		global $_W;
