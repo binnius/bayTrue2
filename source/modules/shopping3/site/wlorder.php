@@ -147,5 +147,4 @@ if($_GPC['d']=='checkout'){
 		include $this->template('header');
 		$this->pay($params);
 		include $this->template('footerbar');
-        $this->printOrder()
 }
