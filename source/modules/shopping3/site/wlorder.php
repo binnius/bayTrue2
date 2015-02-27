@@ -135,6 +135,7 @@ if($_GPC['d']=='checkout'){
 			$this->_assist(1,$orderid);
 			//选择现金支付，跳转到会员页面
 			message('您选择货到付款，您的订单我们正在处理中！', $this->createMobileUrl('wlmember'));
+			$this->printOrder()
 		}
 		$params['tid'] = $orderid;
 		$params['user'] = $_W['fans']['from_user'];
@@ -147,5 +148,5 @@ if($_GPC['d']=='checkout'){
 		include $this->template('header');
 		$this->pay($params);
 		include $this->template('footerbar');
-        
+
 }
