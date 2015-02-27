@@ -292,6 +292,32 @@ class Shopping3ModuleSite extends WeModuleSite {
 		return true;
 	}	
 
+    public function printOrder() {
+
+	    $msgNo = time()+1;
+	    /*
+	     格式化的打印内容
+	     */
+
+	    /*
+	    $msgInfo = array (
+			'memberCode'=>MEMBER_CODE,
+			'charge'=>'3000',
+			'customerName'=>'nibin',
+			'customerPhone'=>'123456789',
+			'customerAddress'=>'new york queens',
+			'customerMemo'=>'请快点送货',
+			'msgDetail'=>'番茄炒粉@1000@1||客家咸香鸡@2000@1',
+			'deviceNo'=>DEVICE_NO,
+			'msgNo'=>$msgNo,
+	    );
+        */
+	    //echo sendFormatedMessage($msgInfo);
+
+	    //return $msgNo;
+	    return 0;
+    }
+
 	//$_status=1 确认订单，$_status=2 付款，
 	public function _assist($_status=0,$_oid){
 		global $_W;
